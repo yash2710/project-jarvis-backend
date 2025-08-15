@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+
+# Generated files
+src/routes/routes.ts
+
+# Config files
+package-lock.json
+*.log
+
+# IDE
+.vscode/

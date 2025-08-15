@@ -1,0 +1,27 @@
+{
+  "entryFile": "src/app.ts",
+  "noImplicitAdditionalProperties": "throw-on-extras",
+  "controllerPathGlobs": ["src/controllers/**/*Controller.ts"],
+  "spec": {
+    "outputDirectory": "dist/swagger",
+    "specVersion": 3,
+    "name": "Project Jarvis Backend API",
+    "description": "Backend API for Project Jarvis with MongoDB integration",
+    "version": "1.0.0",
+    "host": "localhost:3000",
+    "basePath": "/api",
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "securityDefinitions": {},
+    "tags": [
+      {
+        "name": "Hello",
+        "description": "Hello API endpoints"
+      }
+    ]
+  },
+  "routes": {
+    "routesDir": "src/routes"
+  }
+}

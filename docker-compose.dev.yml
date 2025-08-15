@@ -1,0 +1,22 @@
+services:
+  mongodb:
+    image: mongo:7.0
+    container_name: project-jarvis-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: project-jarvis
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - jarvis-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  jarvis-network:
+    driver: bridge

@@ -23,7 +23,7 @@ A TypeScript-based Node.js backend API built with Express, TSOA, MongoDB, and Sw
 ### 1. Clone and Setup
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/yash2710/project-jarvis-backend.git
 cd project-jarvis-backend
 npm install
 ```

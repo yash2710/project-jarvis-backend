@@ -1,4 +1,5 @@
 import { Client } from '../decorators/Client';
+import { injectable } from 'tsyringe';
 import mongoose from 'mongoose';
 
 interface DatabaseStats {
@@ -11,6 +12,7 @@ interface DatabaseStats {
 }
 
 @Client({ name: 'DatabaseClient' })
+@injectable()
 export class DatabaseClient {
   private connectionString: string;
   private isConnected: boolean = false;

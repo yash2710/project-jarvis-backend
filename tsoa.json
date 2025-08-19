@@ -22,6 +22,7 @@
     ]
   },
   "routes": {
-    "routesDir": "src/routes"
+    "routesDir": "src/routes",
+    "iocModule": "src/ioc/tsoa-adapter"
   }
 }

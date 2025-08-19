@@ -1,9 +1,11 @@
-import { ComponentRegistry } from './ComponentRegistry';
-
 export interface ControllerOptions {
   name?: string;
   dependencies?: string[];
 }
+
+// Global controller registry for TSOA integration
+const controllerRegistry = new Map<any, string>();
+const controllerTokenMap = new Map<string, string>();
 
 export function JarvisController(
   options: ControllerOptions = {}
@@ -11,13 +13,12 @@ export function JarvisController(
   return function (target: any) {
     const name = options.name || target.name;
 
-    ComponentRegistry.register({
-      name,
-      type: 'controller',
-      target,
-      dependencies: options.dependencies || [],
-      initialized: false,
-    });
+    // Register for TSOA dynamic resolution
+    controllerRegistry.set(target, name);
+    
+    // Create dynamic mapping to DI tokens based on naming convention
+    // Controller name -> DI Token (e.g., "HelloController" -> "HelloController")
+    controllerTokenMap.set(name, name);
 
     // Add a static method to get dependencies
     target.getDependencies = function (): string[] {
@@ -31,4 +32,13 @@ export function JarvisController(
 
     return target;
   };
+}
+
+export function getControllerToken(controller: any): string | undefined {
+  const controllerName = controllerRegistry.get(controller);
+  return controllerName ? controllerTokenMap.get(controllerName) : undefined;
+}
+
+export function getAllControllerTokens(): Map<string, string> {
+  return new Map(controllerTokenMap);
 }

@@ -8,21 +8,20 @@ import {
   SuccessResponse,
 } from 'tsoa';
 import { JarvisController } from '../decorators/Controller';
-import { ComponentRegistry } from '../decorators/ComponentRegistry';
+import { injectable, inject } from 'tsyringe';
+import { SERVICES } from '../ioc/constants';
 import { HelloService } from '../services/HelloService';
 import { HelloResponse, CreateHelloRequest } from '../types';
 
 @JarvisController({ name: 'HelloController', dependencies: ['HelloService'] })
+@injectable()
 @Route('hello')
 @Tags('Hello')
 export class HelloController extends TsoaController {
-  private helloService: HelloService;
-
-  constructor() {
+  constructor(
+    @inject(SERVICES.HELLO_SERVICE) private helloService: HelloService
+  ) {
     super();
-    // Get the service instance synchronously
-    this.helloService =
-      ComponentRegistry.getInstance<HelloService>('HelloService')!;
   }
 
   /**

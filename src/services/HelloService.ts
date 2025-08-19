@@ -1,10 +1,17 @@
 import { Service } from '../decorators/Service';
+import { injectable, inject } from 'tsyringe';
+import { CLIENTS } from '../ioc/constants';
 import { HelloMessage, IHelloMessage } from '../models/HelloMessage';
 import { HelloResponse, CreateHelloRequest } from '../types';
+import { DatabaseError } from '../errors';
+import { DatabaseClient } from '../clients/DatabaseClient';
 
 @Service({ name: 'HelloService' })
+@injectable()
 export class HelloService {
-  constructor() {}
+  constructor(
+    @inject(CLIENTS.DATABASE_CLIENT) private databaseClient: DatabaseClient
+  ) {}
 
   async getLatestHello(): Promise<HelloResponse> {
     try {
@@ -51,7 +58,7 @@ export class HelloService {
       };
     } catch (error) {
       console.error('Error creating hello message:', error);
-      throw new Error('Failed to create hello message');
+      throw new DatabaseError('Failed to create hello message', { originalError: error });
     }
   }
 
@@ -75,7 +82,7 @@ export class HelloService {
       return await HelloMessage.find().sort({ timestamp: -1 }).exec();
     } catch (error) {
       console.error('Error fetching all hello messages:', error);
-      throw new Error('Failed to fetch hello messages');
+      throw new DatabaseError('Failed to fetch hello messages', { originalError: error });
     }
   }
 
@@ -84,7 +91,7 @@ export class HelloService {
       return await HelloMessage.find({ userId }).sort({ timestamp: -1 }).exec();
     } catch (error) {
       console.error('Error fetching hello messages by user ID:', error);
-      throw new Error('Failed to fetch hello messages by user ID');
+      throw new DatabaseError('Failed to fetch hello messages by user ID', { originalError: error, userId });
     }
   }
 }

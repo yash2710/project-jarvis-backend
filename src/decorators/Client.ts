@@ -1,5 +1,3 @@
-import { ComponentRegistry } from './ComponentRegistry';
-
 export interface ClientOptions {
   name?: string;
   dependencies?: string[];
@@ -8,14 +6,6 @@ export interface ClientOptions {
 export function Client(options: ClientOptions = {}): ClassDecorator {
   return function (target: any) {
     const name = options.name || target.name;
-
-    ComponentRegistry.register({
-      name,
-      type: 'client',
-      target,
-      dependencies: options.dependencies || [],
-      initialized: false,
-    });
 
     // Add a static method to get dependencies
     target.getDependencies = function (): string[] {

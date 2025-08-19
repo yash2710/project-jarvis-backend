@@ -5,7 +5,8 @@ import * as swaggerUi from 'swagger-ui-express';
 import { Database } from './config/database';
 import { RegisterRoutes } from './routes/routes';
 import { bootstrap } from './bootstrap';
-import { ComponentRegistry } from './decorators/ComponentRegistry';
+import { DIRegistry } from './ioc';
+import { CLIENTS } from './ioc/constants';
 
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
@@ -64,13 +65,8 @@ async function startServer(): Promise<void> {
     await bootstrap();
     
     // Connect to MongoDB using our DatabaseClient
-    const databaseClient = ComponentRegistry.getInstance<{ connect: () => Promise<void> }>('DatabaseClient');
-    if (databaseClient && typeof databaseClient.connect === 'function') {
-      await databaseClient.connect();
-    } else {
-      // Fallback to original Database connection
-      await Database.connect();
-    }
+    const databaseClient = DIRegistry.resolve<{ connect: () => Promise<void> }>(CLIENTS.DATABASE_CLIENT);
+    await databaseClient.connect();
     
     // Register TSOA routes under /api
     RegisterRoutes(apiRouter);

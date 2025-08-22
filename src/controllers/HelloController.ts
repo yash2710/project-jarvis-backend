@@ -12,6 +12,7 @@ import { injectable, inject } from 'tsyringe';
 import { SERVICES } from '../ioc/constants';
 import { HelloService } from '../services/HelloService';
 import { HelloResponse, CreateHelloRequest } from '../types';
+import { ProjectService } from '../services';
 
 @JarvisController({ name: 'HelloController', dependencies: ['HelloService'] })
 @injectable()
@@ -19,7 +20,8 @@ import { HelloResponse, CreateHelloRequest } from '../types';
 @Tags('Hello')
 export class HelloController extends TsoaController {
   constructor(
-    @inject(SERVICES.HELLO_SERVICE) private helloService: HelloService
+    @inject(SERVICES.HELLO_SERVICE) private helloService: HelloService,
+    @inject(SERVICES.PROJECT_SERVICE) private projectService: ProjectService
   ) {
     super();
   }
@@ -30,6 +32,8 @@ export class HelloController extends TsoaController {
   @Get('/')
   @SuccessResponse(200, 'Success')
   public async getHello(): Promise<HelloResponse> {
+    const projects = await this.projectService.getAllProjects();
+    console.log('Projects:', projects);
     return await this.helloService.getLatestHello();
   }
 

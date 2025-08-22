@@ -17,6 +17,8 @@ export {
   DependencyNotFoundError,
 } from './dependency/DependencyError';
 
+export * from './notfound';
+
 // Error Helper Functions
 import { AppError } from './base/AppError';
 

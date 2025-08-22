@@ -11,6 +11,7 @@ export class DIRegistry {
    */
   static register(): void {
     registrations.forEach(({ token, implementation }) => {
+      console.log(`Registering ${token} to ${typeof(implementation)}`);
       container.registerSingleton(token, implementation);
     });
   }

@@ -12,11 +12,13 @@ export const CLIENTS = {
 // Service constants
 export const SERVICES = {
   HELLO_SERVICE: 'HelloService',
+  PROJECT_SERVICE: 'ProjectService',
 } as const;
 
 // Controller constants
 export const CONTROLLERS = {
   HELLO_CONTROLLER: 'HelloController',
+  PROJECT_CONTROLLER: 'ProjectsController',
 } as const;
 
 // Type definitions for dependency identifiers

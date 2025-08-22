@@ -28,7 +28,9 @@ export const registrations: RegistrationEntry[] = [
 
   // Service registrations  
   { token: SERVICES.HELLO_SERVICE, implementation: Services.HelloService },
+  { token: SERVICES.PROJECT_SERVICE, implementation: Services.ProjectService },
 
   // Controller registrations
   { token: CONTROLLERS.HELLO_CONTROLLER, implementation: Controllers.HelloController },
+  { token: CONTROLLERS.PROJECT_CONTROLLER, implementation: Controllers.ProjectsController },
 ];
